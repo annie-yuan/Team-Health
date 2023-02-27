@@ -1,0 +1,72 @@
+T1: Login as Professor
+1. Navigate to https://msci342-w22-team-14.herokuapp.com/
+2. Enter the following in each field: 
+    Email: msmucker@uwaterloo.ca 
+    Password: professor  
+3. Select ‘Login’ 
+4. Assert login was successful
+
+T2: Create New Course
+1. Select 'Add Course'
+2. Enter the following in each fi
+
+T2: Create New Team
+1. Select ‘Manage Teams’ 
+2. Select ‘New Team’ 
+3. Enter the following in each field: 
+    Team Name: <MM>.<DD> Test Team 
+    Team Code: <MM>.<DD> 
+4. Select ‘Create Team’ 
+5. Assert that you have created a team with no feedbacks entered (should display ‘Team has no feedbacks yet!’) 
+6. Select ‘Back’ 
+7. Select ‘Logout’ 
+
+T3: Signup
+1. Navigate to https://msci342-w22-team-14.herokuapp.com/
+2. Select ‘Sign Up’ 
+3. Enter the following in each field: 
+    First Name: Test 
+    Last Name: Student 
+    Team/Admin Code: <MM>.<DD> 
+    <MM>.<DD>@uwaterloo.ca
+    asdfasdf 
+    asdfasdf  
+4. Select ‘Create account’ 
+5. Assert you have created a student and logged in (should display ‘User was successfully created.’) 
+
+T4: Submit Feedback 
+1. Select ‘Submit for: <MM>.<DD> Test Team’ 
+2. Enter the following in each field: 
+    1
+    3
+    4
+    2
+    5
+    Medium 
+    words
+3. Select ‘Create Feedback’ 
+4. Assert that you have submitted feedback (should display ‘Feedback was successfully created’) 
+
+T5: Student View Feedback Summary
+1. Assert that summary view is displayed for <Date> Test Team, with urgency level of medium, average rating N/A, and the Test Student team member
+
+T6: Student View Historical Feedback 
+1. Select ‘View Historical Data’ 
+2. Assert Historical Feedback for current period exists, with average rating N/A and weighted priority of medium 
+3. Select ‘Back’  
+4. Select ‘Logout’ 
+
+T7: View Team Summary
+1. Navigate to https://www.msci342-w21-team-5.herokuapp.com 
+2. Enter the following in each field: 
+    Email: msmucker@gmail.com 
+    Password: professor  
+3. Select ‘Login’ 
+4. Assert that the Test Team appears in the team summary view  
+
+T8: View Detailed Feedback 
+1. Select ‘Details’ 
+2. Assert that feedback from Test Student appears, and that rating is 3.0, with a comment of ‘words’ 
+3. Assert that team member list only includes Test Student 
+4. Select ‘Back’  
+5. Select ‘Logout’ 
