@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.first_name %>
+  <%= @user.last_name %>
+</p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @user.role %>
+</p>
+
+<p>
+  <% unless @user.is_admin? %>
+    <strong>Team: </strong>
+    <%= @user.team_names.join(", ") %>
+  <% end %>
+</p>
+
+<% if is_admin? %>
+ <p><%= link_to 'Regenerate Password', user_regenerate_password_path, class: "btn" %></p>
+<% end %>
+
+<%= link_to 'Back', :back %>

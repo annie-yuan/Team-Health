@@ -1,0 +1,258 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+html {
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  flex-basis: 100%;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.042), 0 6px 20px 0 rgba(0, 0, 0, 0.111);
+  padding: 5em;
+  padding-top: 0em;
+  margin: 0;
+  height: auto;
+}
+
+a:hover {
+  color: grey;
+  background-color: transparent;
+}
+
+input {
+  border: none;
+  padding: 0.33em;
+  padding-left: 0.8em;
+  padding-right: 1em;
+  border-bottom-color: rgba(0, 0, 0, 0.3);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  background-color: hsl(0, 0%, 98%);
+}
+
+*:focus {
+  outline: none;
+}
+
+input[type="submit"] {
+  padding-left: 1em;
+  background-color: #e6e6e6;
+  border: none;
+  border-radius: 0.25em;
+}
+
+input[type="submit"]:hover {
+  background-color: #cccccc;
+}
+
+td {
+  max-width: 50em;
+  word-wrap: break-word;
+}
+
+.help-div {
+  padding-bottom: 2em;
+  padding-top: 1em;
+}
+
+/* Navigation bar rules */
+nav {
+  margin: 0em -5em 4em -5em;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.33);
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: hsl(0, 0%, 30%);
+}
+
+nav li {
+  float: left;
+}
+
+nav li a {
+  display: block;
+  color: white !important;
+  text-align: center;
+  padding: 1em 1em 1em 1em; 
+  text-decoration: none;
+}
+
+.navlast {
+  float: right;
+}
+
+#pagination {
+  text-align: center;
+}
+
+nav li a:hover {
+  background-color: #111;
+  text-decoration: underline;
+}
+
+.active {
+  background-color: hsl(240, 70%, 40%);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  border: none;
+  padding: 0.4em;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: hsl(0, 0%, 95%);
+}
+
+/* Makes a nice line to separate page elems */
+.line {
+  border: solid;
+  border-color: black;
+  border-width: 1px;
+  width: 100%;
+  margin: 4em 0em 4em 0em;
+}
+
+/* line without lots of margin */
+.small-line {
+  border: solid;
+  border-color: gray;
+  border-width: 1px;
+  width: 90%;
+  margin: 1em auto 1.5em auto;
+}
+
+/* Adapted from w3schools.com/css/css_dropdowns.asp */
+li.dropdown {
+  display: inline-block;
+}
+
+.dropdown-content {
+  width: auto;
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.111);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black !important;
+  padding: 0.6em 1.2m 0.6em 1.2em;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover { 
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Used for styling links as buttons, and when in li elems  */
+.btns {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: none;
+}
+
+.btn {
+  color: black !important;
+  border: 1px solid #e6e6e6;
+  padding: 0.33em 1em 0.33em 1em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  background-color: #e6e6e6;
+  border-radius: 0.25em;
+}
+
+.btn:hover {
+  background-color: #cccccc;
+  border-color: #cccccc;
+}
+
+/* Used to vertically center buttons in table td elements */
+.table-td {
+  display: table;
+}
+.table-btn {
+  margin  : 0.6em;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.dot-red {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: rgb(153, 0, 0);
+}
+
+.dot-yellow {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: rgb(255, 204, 0);
+}
+
+.dot-green {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: rgb(0, 153, 51);
+}
+
+.dot-grey {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: rgba(137, 148, 140, 0.651);
+}
+
+#error {
+  color: red;
+}
+
+.field_with_errors {
+  padding: 4px !important;
+  background-color: red !important;}
+
+.field_with_errors_admin_code {
+    border: 4px solid red;
+  }

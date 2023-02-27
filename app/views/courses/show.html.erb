@@ -1,0 +1,219 @@
+<h1>Welcome, <%=@user.first_name%>
+<%=@user.last_name%></h1>
+
+<% if is_admin? %>
+  
+  <br>
+  <h3>Course: <%= @course.course_name %></h3>
+  <h3>Course code: <%= @course.course_code %></h3>
+  <br>
+
+  <div class="line">
+  </div>
+   <%= render 'current_filter' %>
+
+  <h2>Team Summary View</h2>
+  <h2>Current Week: <%= @week_range[:start_date].strftime('%b %e, %Y')%> to <%= @week_range[:end_date].strftime('%b %e, %Y')%></h2>
+
+  <% if @current_teams.size == 0 %>
+    <p>No teams yet!</p>
+  <% else %>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Priority</th>
+          <th>Average Rating</th>
+          <th>Team Name</th>
+          <th>Team Code</th>
+          <th>Team Members</th>
+          <th>Missing Feedback</th>
+          <th>Missing Member(s)</th>
+          <th colspan="5"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @current_teams.each do |team| %>
+          <tr id=<%= team.id %>>
+            <td><span class= <%= @week_range[:end_date] < @now ? 'dot-' + team.status(@week_range[:start_date], @week_range[:end_date]) : 'dot-grey' %>>
+            </span></td>
+            <td><%= @priority[:current_week][team] ? @priority[:current_week][team] : "No feedback" %></td>
+            <% average_rating = Team.feedback_average_rating(team.feedbacks.where(timestamp: @week_range[:start_date]..@week_range[:end_date])) %>
+            <td>
+              <% if Time.now >= @week_range[:end_date] %>
+                <%= average_rating ? average_rating : "No feedback" %>
+              <% else %>
+                <%= "N/A" %>
+              <% end %>
+            </td>
+            <td><%= team.team_name %></td>
+            <td><%= team.team_code %></td>
+            <td><%= team.student_names.size == 0 ? 'No members' :
+              team.student_names.each_slice(2).\
+                map { |i| "#{i.first} #{i.last}" }.join(", ") %></td>
+            <td><%= @unsubmitted[:current_week][team.id].size == 0 ? 'All submitted!' : @unsubmitted[:current_week][team.id].join(", ") %></td>
+            <td>
+              <%= team.pending_users.map{ |user| "#{user.name}"}.join(', ') %>
+            </td>
+            <td><%= link_to "Details", team %></td>
+          </tr>
+
+        <% end %>
+      </tbody>
+    </table>
+
+  <% end %>
+  <div class="line"></div>
+  
+  <%= render 'previous_filter' %>
+
+  <h2>Previous Week: <%= (@week_range[:start_date] - 7.days).strftime('%b %e, %Y')%> to <%= (@week_range[:end_date] - 7.days).strftime('%b %e, %Y')%></h2>
+
+  <% if @previous_teams.size == 0 %>
+    <p>No teams yet!</p>
+
+  <% else %>
+
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Priority</th>
+          <th>Average Rating</th>
+          <th>Team Name</th>
+          <th>Team Code</th>
+          <th>Team Members</th>
+          <th>Missing Feedback</th>
+          <th colspan="5"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @previous_teams.each do |team| %>
+          <tr>
+            <td><span class=<%= 'dot-' + team.status(@week_range[:start_date] - 7, @week_range[:end_date] - 7) %>></span></td>
+            <% priority = team.find_priority_weighted((@week_range[:start_date] - 7.days), (@week_range[:end_date] - 7.days)) %>
+            <td><%= priority ? priority : "No feedback" %></td>
+            <% average_rating = Team.feedback_average_rating(team.feedbacks.where(timestamp: (@week_range[:start_date] - 7.days)..(@week_range[:end_date] - 7.days))) %>
+            <td><%= average_rating ? average_rating : "No feedback" %></td>
+            <td><%= team.team_name %></td>
+            <td><%= team.team_code %></td>
+            <td><%= team.student_names.size == 0 ? 'No members' :
+              team.student_names.each_slice(2).\
+                map { |i| "#{i.first} #{i.last}" }.join(", ") %></td>
+            <td><%= @unsubmitted[:previous_week][team.id].size == 0 ? 'All submitted!' : @unsubmitted[:previous_week][team.id].join(", ") %></td>
+
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+
+<% else %>
+
+    <% team_array = @rating_reminders %>
+    <% days_till_end_week = @days_till_end_week %>
+    <% warn_user = team_array.size > 0 %>
+    <% if warn_user && days_till_end_week <= 1 %>
+      <p class="warning1day">WARNING: <%= days_till_end_week %> days left to submit feedback:</p>
+    <% end %>
+    <% if warn_user && days_till_end_week == 2 %>
+      <p class="warning2days">Important: <%= days_till_end_week %> days left to submit feedback:</p>
+    <% end %>
+    <% if warn_user && days_till_end_week > 2 %>
+      <p class="warning"><%= days_till_end_week %> days left to submit feedback:</p>
+    <% end %>
+    <ul class="btns">
+      <% team_array.each do |team| %>
+        <li><%= link_to 'Submit for: ' + team.team_name, new_feedback_path, class: "btn" %></li>
+      <% end %>
+    </ul>
+
+
+    <div class="line"></div>
+    <% if current_user.teams.size == 0 %>
+      <p>No teams yet!</p>
+    <% else %>
+      <br>
+      <h2>Team Summary View</h2>
+      <h2>Current Week: <%= @week_range[:start_date].strftime('%b %e, %Y')%> to <%= @week_range[:end_date].strftime('%b %e, %Y')%></h2>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Urgency/Intervention Level</th>
+            <th>Average Rating (Out of 5)</th>
+            <th>Team Name</th>
+            <th>Team Members</th>
+            <th>Missing Feedback</th>
+            <th colspan="5"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @current_user.teams.each do |team| %>
+            <tr id=<%= team.id %>>
+            <td><span class= <%= @week_range[:end_date] < @now ? 'dot-' + team.status(@week_range[:start_date], @week_range[:end_date]) : 'dot-grey' %>>
+              </td>
+              <% priority = team.find_priority_weighted(@week_range[:start_date], @week_range[:end_date]) %>
+              <td><%= priority ? priority : "No feedback" %></td>
+              <% average_rating = Team.feedback_average_rating(team.feedbacks.where(timestamp: @week_range[:start_date]..@week_range[:end_date])) %>
+              <td>
+                <% if Time.now >= @week_range[:end_date] %>
+                  <%= average_rating ? average_rating : "No feedback" %>
+                <% else %>
+                  <%= "N/A" %>
+                <% end %>
+              </td>
+              <td><%= team.team_name %></td>
+              <td><%= team.student_names.size == 0 ? 'No members' :
+              team.student_names.each_slice(2).\
+                map { |i| "#{i.first} #{i.last}" }.join(", ") %></td>
+              <td><%= @unsubmitted[:current_week][team.id].size == 0 ? 'All submitted!' : @unsubmitted[:current_week][team.id].join(", ") %></td>
+              <%if team.feedbacks.size > 0%>
+                <td><%= link_to "View Historical Data", team %></td>
+              <% else %>
+                <td>Team Does Not Have Any Ratings!</td>
+              <%end%>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="line"></div>
+
+      <h2>Previous Week: <%= (@week_range[:start_date] - 7.days).strftime('%b %e, %Y')%> to <%= (@week_range[:end_date] - 7.days).strftime('%b %e, %Y')%></h2>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Urgency/Intervention Level</th>
+            <th>Average Rating (Out of 5)</th>
+            <th>Team Name</th>
+            <th>Team Members</th>
+            <th>Missing Feedback</th>
+            <th colspan="5"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @current_user.teams.each do |team| %>
+            <tr>
+              <td><span class=<%= 'dot-' + team.status(@week_range[:start_date] - 7, @week_range[:end_date] - 7) %>></span></td>
+              <% priority = team.find_priority_weighted((@week_range[:start_date] - 7.days), (@week_range[:end_date] - 7.days)) %>
+              <td><%= priority ? priority : "No feedback" %></td>
+              <% average_rating = Team.feedback_average_rating(team.feedbacks.where(timestamp: (@week_range[:start_date] - 7.days)..(@week_range[:end_date] - 7.days))) %>
+              <td><%= average_rating ? average_rating : "No feedback" %></td>
+              <td><%= team.team_name %></td>
+              <td><%= team.student_names.size == 0 ? 'No members' :
+              team.student_names.each_slice(2).\
+                map { |i| "#{i.first} #{i.last}" }.join(", ") %></td>
+              <td><%= @unsubmitted[:previous_week][team.id].size == 0 ? 'All submitted!' : @unsubmitted[:previous_week][team.id].join(", ") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+  <% end %>
+<% end %>

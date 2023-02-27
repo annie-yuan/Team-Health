@@ -1,0 +1,26 @@
+<h1>Welcome to the Team Feedback Page</h1>
+<p>In group projects, there are 5 main criteria that make a successful team.</p>
+<ol>
+    <li>Collaboration</li>
+    <li>Communication</li>
+    <li>Time Management</li>
+    <li>Problem Solving</li>
+    <li>Knowledge of roles</li>
+</ol>
+<p>The questions below will be your overall feedback on your team's performance based upon fulfilling the
+above criteria. Please rate your team's performance using the below scale.</p>
+
+<table>
+  <tr> <b> 5 - Strongly Agree </b> </tr> <br/>
+  <tr> <b> 4 - Agree </b> </tr> <br/>
+  <tr> <b> 3 - Neither Agree nor Disagree (Undecided) </b> </tr> <br/>
+  <tr> <b> 2 - Disagree </b> </tr> <br/>
+  <tr> <b> 1 - Strongly Disagree  </b></tr> <br/>
+
+</table>
+ <br/>
+
+<%= render 'form', feedback: @feedback, team: @team, user: @user, flag: false %>
+
+
+<%= link_to 'Back', :back %>

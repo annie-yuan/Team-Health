@@ -1,0 +1,63 @@
+<h1>Teams</h1>
+<%= link_to 'New Team', new_team_path, id: "new-team-link" %> |
+<%= link_to 'Back', :back %> |
+<%= link_to 'Export As CSV', teams_path(format: :csv) %>
+<br />
+<% if @teams.size == 0 %>
+  <p>No teams yet!</p>
+<% else %>
+<br />
+  <table>
+    <thead>
+      <tr>
+        <th>Course</th>
+        <th>Course Code</th>
+        <th><%= sort_team_name "team_name", "Team Name" %></th>
+        <th>Team Code</th>
+        <th>Created By</th>
+        <th>Team Members</th>
+        <th colspan="4"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @teams.each do |team| %>
+        <tr id=team<%= team.id %> >
+          <td><%= team.course.course_name %></td>
+          <td><%= team.course.course_code %></td>
+          <td><%= team.team_name %></td>
+          <td><%= team.team_code %></td>
+          <td><%= team.course.admin.first_name %>
+          <%= team.course.admin.last_name %>
+          </td>
+          <td><%= team.student_names.each_slice(2).\
+            map { |i| "#{i.first} #{i.last}" }.join(", ") %></td>
+          <td><%= link_to 'Show', team %></td>
+          <td><%= link_to 'Edit', edit_team_path(team) %></td>
+
+
+          <td><%= link_to 'Delete Team', team_confirm_delete_path(team.id) %></td>
+          <td>
+            <%= form_with url: "/teams/#{team.id}/users/", method: :post, local: true do |f| %>
+            <div >
+              <%= f.text_field :user_email %>
+              <%= f.submit 'Add Members' %>
+            </div>
+          <% end %>
+          </td>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br /> 
+ <div id = "pagination">
+    <%= will_paginate @teams %>  
+    <% will_paginate @teams %>
+  </div>
+<br />
+<% end %>
+ 
+
+<%# Use id to prevent capybara getting confused about which "new team" link to click %>
+

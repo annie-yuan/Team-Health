@@ -1,0 +1,11 @@
+<h1>Confirm Delete <%= @team.team_name %></h1>
+<h4>By deleting a team, users previously on the team will not have a team and all feedback will be deleted</h4>
+
+<%= form_with url: team_url(@team), method: :delete do |form| %>
+  <div class="actions">
+    <%= form.submit "Delete Team" %>
+  </div>
+<% end %>
+
+<%= link_to 'Show', @team %> |
+<%= link_to 'Back', :back %>

@@ -1,0 +1,35 @@
+<h1>Your Profile:</h1>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @current_user.email %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @current_user.first_name %>
+  <%= @current_user.last_name %>
+</p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @current_user.role %>
+</p>
+
+<p>
+  <% unless is_admin? %>
+    <strong>Team(s): </strong>
+    <%= @current_user.team_names.join(", ") %>
+  <% end %>
+</p>
+
+<p>
+<strong>Actions:</strong>
+<ul>
+<li><%= link_to 'Change Password', reset_password_path %></li>
+<li><%= link_to 'Edit Name', edit_user_path(@current_user) %></li>
+</ul>
+</p>
+
+<%= link_to 'Back', :back %>

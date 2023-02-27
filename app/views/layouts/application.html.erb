@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TeamHealth</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+  </head>
+    
+ <body>
+  <% if logged_in? %>
+    <nav>
+      <ul>
+        <% if current_page?(root_path)%>
+          <li><%= link_to 'Home', root_path, class: "active" %></li>
+        <% else %>
+          <li><%= link_to 'Home', root_path %></li>
+        <% end %>
+        <li class="navlast dropdown">
+          <%= link_to 'Logout', logout_path %>
+        </li>
+
+           <% if current_page?(accounts_path) %>
+            <li><%= link_to 'Account', accounts_path, class: "active" %></li>
+          <% else %>
+            <li><%= link_to 'Account', accounts_path %></li>
+          <% end %>
+          
+        <% if is_admin? %>
+          <% if current_page?(teams_path) %>
+            <li class="dropdown">
+              <%= link_to 'Manage Teams', teams_path, class: "active" %>
+              <div class="dropdown-content">
+                <%= link_to 'New Team ', new_team_path, style: "padding-right: 3em;" %>
+              </div>
+            </li>
+          <% else %>
+            <li class="dropdown">
+              <%= link_to 'Manage Teams', teams_path %>
+              <div class="dropdown-content">
+                <%= link_to 'New Team', new_team_path, style: "padding-right: 3em;" %>
+              </div>
+            </li>
+          <% end %>
+
+          <% if current_page?(users_path) %>
+            <li><%= link_to 'Manage Users', users_path, class: "active" %></li>
+          <% else %>
+            <li><%= link_to 'Manage Users', users_path %></li>
+          <% end %>
+<!--
+          <% if current_page?(reports_path) %>
+            <li><%= link_to 'Reports', reports_path, class: "active" %></li>
+          <% else %>
+            <li><%= link_to 'Reports', reports_path %></li>
+          <% end %>
+-->
+          
+          <% if current_page?(feedbacks_path) %>
+            <li><%= link_to 'Feedback & Ratings', feedbacks_path, class: "active" %></li>
+          <% else %>
+            <li><%= link_to 'Feedback & Ratings', feedbacks_path %></li>
+          <% end %>
+
+          <% if current_page?('/help') or current_page?('team_view/help') %>
+            <li class="navlast"><%= link_to 'Help', '/help', class: "active" %></li>
+          <% else %>
+            <% if request.path =~ /teams\/\d+/ %>
+              <li class="navlast"><%= link_to 'Help', '/team_view/help' %></li>
+            <% else %>
+              <li class="navlast"><%= link_to 'Help', '/help' %></li>
+            <% end %>
+          <% end %>
+        <% else %>
+        
+       <% if false %>
+          <% if Option.first.reports_toggled %>
+            <% if current_page?(new_report_path) %>
+              <li><%= link_to 'Submit a Report', new_report_path, class: "active" %></li>
+            <% else %>
+              <li><%= link_to 'Submit a Report', new_report_path %></li>
+            <% end %>
+            <% if current_page?(reports_path) %>
+              <li><%= link_to 'View Reports', reports_path, class: "active" %></li>
+            <% else %>
+              <li><%= link_to 'View Reports', reports_path %></li>
+            <% end %>
+          <% end %>
+          <% if request.path =~ /teams\/\d+/ %>
+            <li class="navlast"><%= link_to 'Help', '/team_view/help' %></li>
+          <% end %>
+       <% end %>
+
+        <% end %>
+      </ul>
+    </nav>
+
+  <% end %>
+   <%# Modified from: https://stackoverflow.com/questions/9390778/best-practice-method-of-displaying-flash-messages %>
+   
+   <% flash.each do |key, value| %>
+     <p id='notice'><%= content_tag :div, value, id: "#{key}" %></p>
+   <% end %>      
+     
+  <%= yield %>
+ </body>
+
+</html>

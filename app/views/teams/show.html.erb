@@ -1,0 +1,155 @@
+<p>
+  <strong>Team Name:</strong>
+  <%= @team.team_name %>
+</p>
+
+<p>
+  <strong>Team Code:</strong>
+  <%= @team.team_code %>
+</p>
+
+<p>
+  <strong>Course:</strong>
+  <%= @team.course.course_name %>
+</p>
+
+<p>
+  <strong>Course Code:</strong>
+  <%= @team.course.course_code %>
+</p>
+
+<p>
+  <strong>Created By:</strong>
+  <%= @team.course.admin.first_name %>
+  <%= @team.course.admin.last_name %>
+
+</p>
+
+
+<h2>Team Members:</h2>
+<% if @team.users.length > 0 %>
+
+  <table>
+    <thead>
+      <tr>
+        <th><%= 'Name' %></th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @team.users.each do |user| %>
+        <tr>
+          <td><%= user.first_name %>
+          <%= user.last_name %></td>
+          <% if current_user.is_admin %>
+            <td><%= link_to 'Remove User From Team', team_confirm_delete_delete_user_from_team_path(user_id: user.id, team_id: @team.id) %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>There are no members in this team!</p>
+<% end %>
+<div class="line"></div>
+<% if is_admin? %>
+  <h2>Team's Individual Feedback</h2>
+
+  <% if @team.feedbacks.size == 0 %>
+    <p>Team has no feedbacks yet!</p>
+  <% else %>
+        <% @periods.each do |key, period, range, rating, missing, priority| %>
+          <div id=<%= key[:year] %>-<%= key[:week] %> >
+            <div style="display: inline">
+              <span class=<%= 'dot-' + @team.status(range[:start_date], range[:end_date]) %> style="vertical-align: middle" ></span>
+              <h3 style="display: inline">
+                <%= range[:start_date].strftime('%b %e, %Y') %> to <%= range[:end_date].strftime('%b %e, %Y') %>
+              </h3>
+            </div>
+            <p>Average Rating of Period:
+              <%= Time.now >= range[:end_date]? rating : "N/A" %>
+            </p>
+            <p>Weighted Priority: <%= priority %></p>
+            <p>Missing Feedback: <%= missing.size == 0 ? 'All submitted!' : missing.join(", ") %></p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Student's Name</th>
+                  <th>Average Rating</th>
+                  <th>Collaboration</th>
+                  <th>Communication</th>
+                  <th>Time Management</th>
+                  <th>Problem Solving</th>
+                  <th>Knowledge of Roles</th>
+                  <th>Priority</th>
+                  <th>Comments</th>
+                  <th>Time Submitted</th>
+                  <th colspan="6"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% period.each do |fb| %>
+                  <tr>
+                    <td><%= fb.user.first_name + fb.user.last_name %></td>
+                    <td><%= fb.rating %></td>
+                    <td><%= fb.collaboration_score %></td>
+                    <td><%= fb.communication_score %></td>
+                    <td><%= fb.time_management_score %></td>
+                    <td><%= fb.problem_solving_score %></td>
+                    <td><%= fb.knowledge_of_roles_score %></td>
+                    <%if fb.priority == 2%>
+                      <td><%='Low'%></td>
+                    <%elsif fb.priority == 1%>
+                      <td><%='Medium'%></td>
+                    <%else%>
+                      <td><%='Urgent'%></td>
+                    <%end%>
+                    <%if fb.comments.nil? || fb.comments.size == 0 %>
+                      <td> No Comments Submitted!</td>
+                    <%else%>
+                      <td><%= fb.comments %></td>
+                    <%end%>
+                    <td><%= fb.timestamp.strftime('%Y-%m-%d %H:%M EST') %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div class="small-line"></div>
+          <br/>
+        <% end %>
+  <% end %>
+
+<% else %>
+
+  <h2>Historical Feedback</h2>
+  <% if @team.feedbacks.size == 0 %>
+    <p>Team has no feedbacks yet!</p>
+  <%else%>
+
+    <% @periods.each do |key, period, range, rating, missing, priority| %>
+      <div id=<%= key[:year] %>-<%= key[:week] %> >
+        <div style="display: inline">
+          <span class=<%= 'dot-' + @team.status(range[:start_date], range[:end_date]) %> style="vertical-align: middle" ></span>
+          <h3 style="display: inline">
+            <%= range[:start_date].strftime('%b %e, %Y') %> to <%= range[:end_date].strftime('%b %e, %Y') %>
+          </h3>
+        </div>
+        <p>Average Rating of Period (Out of 5):
+          <%= Time.now >= range[:end_date]? rating : "N/A" %>
+        </p>
+        <p>Weighted Priority: <%= priority %></p>
+      </div>
+      <br/>
+    <% end %>
+
+  <%end%>
+<% end %>
+
+<br>
+<% if is_admin? %>
+  <%= link_to 'Back', :back %> | <%= link_to 'Edit', edit_team_path(@team) %>
+<% else %>
+  <%= link_to 'Back', :back %>
+<% end %>

@@ -1,0 +1,46 @@
+<h1>Users</h1>
+<%= link_to 'Back', :back %> |
+<%= link_to 'Export As CSV', users_path(format: :csv) %>
+<br />
+<% if @users.size == 0 %>
+  <p>No users yet!</p>
+<% else %>
+  <br />
+  <table>
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th><%= sort_name "first_name", "Name" %></th>
+        <th>Courses</th>
+        <th>Teams</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users.each do |user| %>
+        <tr id=user<%= user.id %> >
+          <td><%= user.email %></td>
+          <td><%= user.first_name %>
+          <%= user.last_name %></td>
+          <td><%= user.course_names.join(", ") %></td>
+          <td><%= user.team_names.join(", ") %></td>
+          <td><%= link_to 'Show', user %></td>
+          <td><% if !user.is_admin %><%= link_to 'Delete User', user_confirm_delete_path(user) %> <% end %></td>
+        
+          <!-- <td><%= link_to 'Edit', edit_user_path(user) %></td> -->
+          <!-- <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+        </tr>
+
+      <% end %>
+      
+    </tbody>
+  
+  </table>
+  <br /> 
+  <div id = "pagination">
+      <%= will_paginate @users %>  
+      <% will_paginate @users %>
+    </div>
+  <br />
+<% end %>

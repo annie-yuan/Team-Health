@@ -1,0 +1,70 @@
+<%= form_with(model: user, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name %>
+  </div>
+
+<% if allow_email %>
+  <div class="field" >
+    <%= form.label :email%>
+    <%= form.text_field :email %>
+  </div>
+<% end %>
+
+<% if allow_password %>
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+<% end %>
+
+<% if allow_confirm_password %>
+  <div class="field">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation %>
+  </div>
+<% end %>
+
+<% if allow_admin_code %>
+  <div class="field">
+  <% if user.errors.full_messages.include? 'Invalid admin code. Please leave admin code empty if you are a student.' %>
+    <%= form.label "Admin code (Optional)", :class => 'field_with_errors' %>
+    <%= form.text_field :admin_code, :class => "field_with_errors_admin_code" %>
+  <% else %>
+    <%= form.label "Admin code (Optional)" %>
+    <%= form.text_field :admin_code %>
+  <% end %>
+  </div>
+<% end %>
+
+<% if create_account %>
+  <div class="actions">
+    <%= form.submit "Create account"%>
+  </div>
+<% end %>
+
+<% if update_account %>
+  <div class="actions">
+    <%= form.submit "Update account"%>
+  </div>
+  <% end %>
+
+<% end %>
+

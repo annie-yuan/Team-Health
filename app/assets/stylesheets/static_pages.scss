@@ -1,0 +1,24 @@
+// Place all the styles related to the static_pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+.warning {
+  color: black;
+  font-size: 1.2em;
+  font-size: 1.25em;
+}
+
+.warning2days {
+  color: red;
+  font-size: 1.75em;
+  line-height: 1.75em;
+}
+
+.warning1day{
+  @extend .warning2days;
+  padding-left: 0.5em;
+  font-weight: bold;
+  border: solid;
+  border-radius: 1em;
+  border-width: 5px;
+  border-color: red;
+}

@@ -1,0 +1,6 @@
+<h1>Sign up!</h1>
+
+<%= render 'form', user: @user, allow_admin_code: true, allow_email: true, 
+allow_password: true, allow_confirm_password: true, create_account: true, update_account: false %>
+
+<%= link_to 'Login', login_path %>

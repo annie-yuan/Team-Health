@@ -1,0 +1,72 @@
+<% if is_admin? %>
+  <h1>Help page</h1>
+  <div class="help-div">
+    <h2>Navigation Bar</h2>
+    <p><b>Account</b> - Shows your profile and allows you to change your password and name</p>
+    <p><b>Manage Teams</b> - Allows you to create, delete and edit teams, and export information as CSV</p>
+    <p><b>Manage Users</b> - Allows you to delete users, and export information as CSV</p>
+    
+    <!--
+    <p><b>Reports</b> - Allows you to view user Reports.
+                            Reports allow users to report other users for any reason.
+                            They can optionally include a comment for doing so. <br>
+                            This page also allows you to disable reports by pressing the "Toggle Reports" button.
+                            If you disable reports, users will be unable to report other users and when
+                            you visit the reports page, you will see a message "Reports are disabled.".
+                            If you choose, you can always re-enable the reports functionality by clikcing the "Toggle Reports"
+                            button again.
+    </p>
+    -->
+
+    <p><b>Feedback & Ratings</b> - Shows Feedback on Team, associated ratings and priorities. 
+    Students are required to input collaboration score, communication score, time management score, problem solving score, knowledge of roles score.
+    Information can be exported as CSV
+    </p>
+  </div>
+  <div class="help-div">
+    <h2>Export As CSV Function</h2>
+    <p>- On the top of the "Teams", "Users", "Feedback & Ratings" page, the button "Export as CSV" allows admin to download information
+    as a CSV file. </p>
+    <p>- The file will be in the "download" folder of the local device.</p>
+    
+    <h2>Admin Code</h2>
+    <p>- The admin code is used to allow other professors to sign up with admin rights. To use, send the
+    code to an admin, and instruct them to enter the code into the 'Team/admin code' field upon signup.</p>
+    <p>- In case the code is leaked, select 'Regenerate Code' to reset & regenerate the admin code. When this is done,
+    the previous code will be invalidated.</p>
+    
+    <h2>Course Code</h2>
+    <p>- The course code is inputted by the professor when creating a new course. When admin creates a new team,
+     the course code is required, and the team is created under the specific course. </p>
+    <p>- The course code cannot be edited once the course is created.</p>
+    
+    <h2>Team Code</h2>
+    <p>- The admin enters the student's email and this sends the student a request to join a team 
+    which they can accept by clicking on the 'Join Team' button that appears on their dashboard. </p>
+    <p>- The team code is not required for students to sign up.</p>
+    <p>- The team code cannot be edited once the team is created.</p>
+  </div>
+  <div class="help-div">
+    <h2>Team Summary View </h2>
+    <p><b>Feedback Color</b>
+   - The color of the feedback will be grey and will only be updated after the week is over.</p>
+    <p><b>Urgency/Intervention Level</b> - This displays the overall urgency of Team's feedback. 
+                                           Values will either be "No Feedback", "Urgent" or "Low". <br>
+                                           If at least one of the team's feedback has a priority score of 0 (urgent), 
+                                           then this will display "Urgent".
+                                           If 1/3 of feedback has a priority score of 1 (medium), then this will display "Urgent"
+                                           Otherwise this will display "Low". 
+                                           
+                              
+    </p>
+    <p><b>Average Rating (Out of 5)</b> - Average rating from team members feedback. It is calculated based on the average of 
+    collaboration score, communication score, time management score, problem solving score, knowledge of roles score.</p>
+    <p><b>Team Name</b> - The assigned name to the team.</p>
+    <p><b>Team Code</b> - Provide this code to students prior to signup, and instruct them to enter the code into the 
+      'Team/admin code' field upon signup so they are added to the appropriate team.</p>
+    <p><b>Team Members</b> - List of team members.</p>
+    <p><b>View Team Aggregated Feedback</b> - Show aggregated team feedback.</p>
+    
+  </div>
+  <p><%= link_to 'Back', :back %></p>
+<% end %>

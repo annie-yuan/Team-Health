@@ -1,0 +1,87 @@
+<%= form_for [team, feedback] do |form| %>
+  <% if feedback.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(feedback.errors.count, "error") %> prohibited this feedback from being saved:</h2>
+
+      <ul>
+        <% feedback.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <% if flag == true %>
+      <div class="field">
+        Student Name:
+        <%= user.name %>
+      </div>
+    <% end %>
+  <div class="field">
+    Your Current Team:
+    <% user.team_names.each do |tm| %>
+      <%= tm %>
+    <% end %>   
+  </div>
+
+  <div class="field">
+    Current System Time: 
+    <%= @feedback.format_time(now) %>    
+  </div> 
+
+  <p> <b>Question 1: </b> Team members openly teach and learn from one another to achieve goals. The team collaborates to accomplish tasks effectively and efficiently. </p>
+  <div class="field" >
+    <% choices = [1, 2, 3, 4, 5] %>
+    <%= form.label :collaboration_score%>
+    <%= form.select :collaboration_score, choices, :include_blank => "Pick Number"%>
+  </div>
+
+   <p> <b>Question 2: </b> There is a high level of effective communication in the team, as team members communicate openly and honestly. All team members' ideas are heard. </p>
+  <div class="field">
+    <% choices = [1, 2, 3, 4, 5] %>
+    <%= form.label :communication_score%>
+    <%= form.select :communication_score, choices,  :include_blank => "Pick Number"%>
+  </div>
+
+  <p> <b>Question 3: </b> Team members effectively plan and manage tasks by creating and following strict deadlines. Team members stay focused on the task at hand and organize work effectively. </p>
+  <div class="field">
+    <% choices = [1, 2, 3, 4, 5] %>
+    <%= form.label :time_management_score%>
+    <%= form.select :time_management_score, choices,  :include_blank => "Pick Number"%>
+  </div>
+
+    <p> <b>Question 4: </b> The team can work effectively to solve problems through thinking creatively and analytically. </p>
+  <div class="field">
+    <% choices = [1, 2, 3, 4, 5] %>
+    <%= form.label :problem_solving_score%>
+    <%= form.select :problem_solving_score, choices, :include_blank => "Pick Number" %>
+   
+  </div>
+
+    <p> <b>Question 5: </b> Roles within a group have been clearly established based on what each member is best suited for. Team members are motivated to accomplish tasks and work to their strengths.</p>
+  <div class="field">
+    <% choices = [1, 2, 3, 4, 5] %>
+    <%= form.label :knowledge_of_roles_score%>
+    <%= form.select :knowledge_of_roles_score, choices, :include_blank => "Pick Number" %>
+  </div>
+
+    <p> <b>Question 6: </b> Please pick the priority rating that best describes the urgency of your current team health. 
+    <ul>
+    <li> Low: Not Urgent
+    <li> Medium: Moderately Urgent
+    <li> High: Extremely Urgent (need attention immediately)
+    </ul></p>
+   <div class="field">  
+    <% choices = [["High", 0],["Medium", 1],["Low", 2]] %>
+    <%= form.label :priority%>
+    <%= form.select :priority, choices%>
+  </div>
+
+  <div class="field">
+    <%= form.label "Additional Comments / Feedback" %>
+    <%= form.text_area :comments %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

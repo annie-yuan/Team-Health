@@ -1,0 +1,35 @@
+<!--
+ <h1>View reports</h1>
+
+<% if is_admin? %>
+  
+  <%= button_to 'Toggle Reports', option_toggle_reports_path(Option.first)%>
+
+  <% if Option.first.reports_toggled %>
+    <p>Reports are currently enabled.</p>
+    <hr>
+    <p>You can find a history of all reports submitted below.</p>
+    <%= render 'all_reports' %>
+  <% else %>
+    <p>Reports are currently disabled.</p>
+  <% end %>
+
+<% else %>
+  <% if Option.first.reports_toggled %>
+  <p>You can find a history of reports you submitted, as well as reports submitted against you in the tables below.</p>
+    <h2>Reports You Submitted</h2>
+    <%= render 'reports_as_reporter' %>
+
+    <hr>
+
+    <h2>Reports Submitted Against You</h2>
+    <%= render 'reports_as_reportee' %>
+  <% else %>
+    <p>Reports are disabled.</p>
+  <% end %>
+
+<% end %>
+
+<%= link_to 'Back', :back %> 
+
+-->

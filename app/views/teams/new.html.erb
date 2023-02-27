@@ -1,0 +1,9 @@
+<h1>New Team</h1>
+
+<p style="width: 25%">Invite students to signup for this team by providing them with the team code. Students
+will enter the code on signup, which will then place them into this team's roster.</p>
+<br/>
+
+<%= render 'form', team: @team, code: Team.generate_team_code, edit: @edit %>
+
+<%= link_to 'Back', :back %>

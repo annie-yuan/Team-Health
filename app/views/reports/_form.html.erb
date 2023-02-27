@@ -1,0 +1,44 @@
+<%= form_with(model: report, local: true) do |form| %>
+  <% if report.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(report.errors.count, "error") %> prohibited this report from being submitted:</h2>
+
+      <ul>
+        <% report.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="field">
+      <%= form.hidden_field :reporter_id, :value => @current_user.id %>
+  </div>
+
+  <div class="field">
+<!--       List all students but current student as possible reportee -->
+      <% students_except_self = get_students_except_self %>
+      
+      <% reporteeOptions = options_from_collection_for_select(students_except_self, 'id', 'name') %>
+      <%= form.label :reportee_id %>
+      <%= form.select :reportee_id, reporteeOptions%>
+  </div>
+
+  <div class="field">
+      <!-- Priorities: 0 = urgent, 1 = medium, 2 = low -->   
+      <% priorityOptions = [["Urgent", 0],["Medium", 1],["Low",2]] %>
+      <%= form.label :priority %>
+      <%= form.select :priority, priorityOptions, :selected => "Low"%>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, size: "45x5" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Submit report"%>
+  </div>
+<% end %>

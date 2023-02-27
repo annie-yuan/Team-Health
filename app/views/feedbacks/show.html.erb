@@ -1,0 +1,56 @@
+<p>
+  <strong>User:</strong>
+  <%= @feedback.user.name %>
+</p>
+
+<p>
+  <strong>Team:</strong>
+  <%= @feedback.team.team_name %>
+</p>
+
+<p>
+  <strong>Average Rating:</strong>
+  <%= @feedback.rating %>
+</p>
+
+<p>
+  <strong>Collaboration:</strong>
+  <%= @feedback.collaboration_score %>
+</p>
+
+<p>
+  <strong>Communication:</strong>
+  <%= @feedback.communication_score %>
+</p>
+
+<p>
+  <strong>Time Management:</strong>
+  <%= @feedback.time_management_score %>
+</p>
+
+<p>
+  <strong>Problem Solving:</strong>
+  <%= @feedback.problem_solving_score %>
+</p>
+
+<p>
+  <strong>Knowledge of Roles:</strong>
+  <%= @feedback.knowledge_of_roles_score %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%if @feedback.comments.size == 0%>
+          <td>Students Has Not Submitted Comments!</td>
+        <%else%>
+          <td><%= @feedback.comments %></td>
+        <%end%>
+</p>
+
+<p>
+  <strong>Timestamp:</strong>
+  <%= @feedback.timestamp %>
+</p>
+
+<!--<%= link_to 'Edit', edit_feedback_path(@feedback) %> |-->
+<%= link_to 'Back', :back %>

@@ -1,0 +1,13 @@
+<%= form_with model: Feedback, method: 'get', url: feedbacks_path do %>
+<div class="grid-container">
+   <br>     
+<div>
+    <b><%= label_tag "Filter by Priority:" %></b>
+    <%= check_box_tag 'priority[]', 2 %>Low         
+    <%= check_box_tag 'priority[]', 1 %>Medium
+    <%= check_box_tag 'priority[]', 0 %>Urgent
+    <%= submit_tag 'Apply filter' %>
+</div><br>
+
+<div>
+<% end %>

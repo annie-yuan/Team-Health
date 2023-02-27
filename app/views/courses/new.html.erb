@@ -1,0 +1,9 @@
+<h1>Create a new course</h1>
+
+<b> Admin: <%= @user.name %> </b>
+
+<br>
+<br>
+
+<%= render 'form', course: @course, user: @user %>
+<%= link_to 'Back', root_url %>

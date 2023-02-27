@@ -1,0 +1,79 @@
+<h1>Feedbacks</h1>
+<p>You can find a history of all feedbacks submitted below.</p>
+
+<div>
+<%= link_to 'Back', :back %> |
+<%= link_to 'Export As CSV', feedbacks_path(format: :csv) %>
+
+<br>
+
+<%= render 'filter' %>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Student Name</th>
+      <th>Course</th>
+      <th>Team</th>
+      <th>Average Rating</th>
+      <th>Collaboration</th>
+      <th>&nbspCommunication</th>
+      <th>Time Management</th>
+      <th>Problem Solving</th>
+      <th>Knowledge of Roles</th>
+      <th>Priority</th>
+      <th>Comments</th>
+      <th><%= sort_timestamp "timestamp", "Timestamp" %></th>
+      <th colspan="7"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% if !@feedbacks.blank? %>
+    <% @feedbacks.each do |feedback| %>
+      <tr>
+        <td><%= feedback.user.first_name %>
+        <%= feedback.user.last_name %></td>
+        <td><%= feedback.team.course.course_name %>
+        <td><%= feedback.team.team_name %></td>
+        <td><%= feedback.rating %></td>
+        <td><%= feedback.collaboration_score %></td>
+        <td><%= feedback.communication_score %></td>
+        <td><%= feedback.time_management_score %></td>
+        <td><%= feedback.problem_solving_score %></td>
+        <td><%= feedback.knowledge_of_roles_score %></td>
+        <%if feedback.priority == 2%>
+          <td><%='Low'%></td>
+        <%elsif feedback.priority == 1%>
+          <td><%='Medium'%></td>
+        <%else%>
+          <td><%='Urgent'%></td>
+        <%end%>
+        <%if feedback.comments.size == 0%>
+          <td>Students Has Not Submitted Comments!</td>
+        <%else%>
+          <td><%= feedback.comments %></td>
+        <%end%>
+        <td><%= feedback.timestamp.strftime('%Y-%m-%d %H:%M EST') %></td>
+        <td><%= link_to 'Show', feedback %></td>
+        <!--<td><%= link_to 'Edit', edit_feedback_path(feedback) %></td>
+        <td>
+          <%= form_with model: feedback, local: true, method: 'delete' do |f| %>
+            <%= f.submit "Delete Feedback", class: "table-btn" %>-->
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ <br /> 
+ <div id = "pagination">
+    <%= will_paginate @feedbacks %>  
+    <% will_paginate @feedbacks %>
+  </div>
+<br />
+<br>
+
+
+</div>
+<% end %>

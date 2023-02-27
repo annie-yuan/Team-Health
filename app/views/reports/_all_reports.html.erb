@@ -1,0 +1,30 @@
+<table>
+  <thead>
+    <tr>
+      <th><%= 'Reporter' %></th>
+      <th><%= 'Reportee' %></th>
+      <th><%= 'Description' %></th>
+      <th><%= 'Priority' %></th>
+      <th><%= 'Submission Time' %></th>
+      <th colspan="5"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% Report.all.each do |report| %>
+      <tr>
+        <td><%= User.find(report.reporter_id).name %></td>
+        <td><%= User.find(report.reportee_id).name %></td>
+        <td><%= report.description %></td>
+        <% if report.priority == 0 %>
+          <td><%= 'Urgent' %></td>
+        <% elsif report.priority == 1 %>
+          <td><%= 'Medium' %></td>
+        <% else %>
+          <td><%= 'Low' %></td>
+        <% end %>
+        <td><%= report.created_at.strftime('%Y-%m-%d %H:%M EST') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

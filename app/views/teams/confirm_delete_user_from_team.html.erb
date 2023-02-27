@@ -1,0 +1,8 @@
+<h1>Confirm Remove <%= @user.name %> from <%= @team.team_name %></h1>
+<h4>By deleting a user from a team, their feedback will remain with the team, but the user will no longer be on a team</h4>
+<%= button_to 'Remove User', team_remove_user_from_team_path(user_id: @user.id, team_id: @team.id) %>
+
+<br>
+
+<%= link_to 'Show', @team %> |
+<%= link_to 'Back', :back %>

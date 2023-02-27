@@ -1,0 +1,14 @@
+<h1>Confirm Delete <%= @user.name %></h1>
+<h4>By deleting a user, you will delete their previous feedback and they will no longer be in the database</h4>
+
+<% if @user.id != current_user.id %>
+  <td class="table-td">
+    <%= form_with model: @user, local: true, method: 'delete' do |f| %>
+      <%= f.submit "Delete User", class: "table-btn" %>
+    <% end %>
+  </td>
+<% end %>
+<br>
+
+<%= link_to 'Show', @user %> |
+<%= link_to 'Back', :back %>

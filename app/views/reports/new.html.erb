@@ -1,0 +1,9 @@
+<h1>Submit a report</h1>
+<% if Option.first.reports_toggled %>
+  <p>Please select the user you wish to report and the priority of your report from the dropdowns below. Please enter a description with a maximum length of 2048 characters. These fields are <b>mandatory.</b></p>
+  <%= render 'form', report: @report %>
+<% else %>
+  <p>Reports have been disabled.</p>
+<% end %>
+
+<%= link_to 'Back', :back %>

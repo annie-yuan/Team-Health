@@ -1,0 +1,13 @@
+<%= form_with model: @courses, method: 'get', url: course_path(params[:id]) do %>
+<div class="grid-container">
+   <br>     
+<div>
+    <b><%= label_tag "Filter by Priority:" %></b>
+    <%= check_box_tag 'current_priority[]', "Low" %>Low         
+    <%= check_box_tag 'current_priority[]', "Medium" %>Medium
+    <%= check_box_tag 'current_priority[]', "High" %>Urgent
+    <%= submit_tag "Apply filter", :id => "filter-tag-current" %>
+</div><br>
+
+<div>
+<% end %>
